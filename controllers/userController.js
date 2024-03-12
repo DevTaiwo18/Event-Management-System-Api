@@ -182,12 +182,12 @@ const getMyRegisterEvent = async (req, res, next) => {
                 registrationStatus: registration.status,
                 numberOfSeats: registration.numberOfSeats,
                 ticketPrice: registration.totalPrice,
-
+                ticketType: registration.ticketType
             };
         });
 
         return res.status(200).json({
-            message: 'Events registered by the user',
+            message: 'My registered by the user',
             events
         });
     } catch (error) {
