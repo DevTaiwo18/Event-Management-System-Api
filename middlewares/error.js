@@ -1,5 +1,5 @@
 const handleCastErrorDB = (err) => {
-    const message = `${err.value}.`;
+    const message = `Invalid ${err.path}: ${err.value}.`;
     const error = new Error(message);
     error.statusCode = 400;
     return error
