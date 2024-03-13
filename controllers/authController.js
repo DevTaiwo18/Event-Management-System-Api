@@ -10,7 +10,7 @@ const signup = async (req, res, next) => {
     const { email, password, username} = req.body;
    
     const rules = yup.object().shape({
-        email: yup.string().email("Invalid email format").required(),
+        email: yup.string().email().required(),
         username: yup.string().required(),
         password: yup.string().min(6).required() 
     });
