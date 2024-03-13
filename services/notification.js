@@ -15,7 +15,7 @@ const notify = async ({username, email}) => {
         from: 'eventflow@demomailtrap.com',
         to: email,
         subject: 'Welcome',
-        text: `Hi ${username} Welcome to our Service`
+        text:  `Hi ${username}, welcome to our service! We're thrilled to have you join us. Now that you're here, take some time to explore and create your own events. Dive into a world of opportunities where you can connect, learn, and grow. Let's make something amazing together!`
     };
     
     await transporter.sendMail(mailOptions);
