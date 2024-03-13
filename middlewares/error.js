@@ -17,7 +17,7 @@ const handleDuplicateValueError = (err) => {
 
 const handleValidationErrorDB = (err) => {
     const errors = err.errors; 
-    const message = `Invalid Input Data: ${errors.join(". ")}`;
+    const message = `${errors.join(". ")}`;
     const error = new Error(message);
     error.statusCode = 400;
     return error;
