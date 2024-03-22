@@ -1,6 +1,7 @@
 const Event = require("./../models/Event")
 const Ticket = require("./../models/Ticket")
 const { multerUploads, dataUri, uploader, cloudinaryConfig } = require('./../middlewares/cloudinary');
+const User = require("../models/user");
 
 const createEvent = async (req, res, next) => {
     const userId = req.user.id;
@@ -473,4 +474,21 @@ const getautodelete = async (req, res, next) => {
 
 }
 
-module.exports = { createEvent, getallEvents, getsigleEvents, updateEvents, deleteEvents, createTicket, getTicketforEvent, updateTicket, deleteTicket, getUpcomimgEvent, getFeaturedEvent, getEventForCategories, getLengthofCategories, getSearchEvent }
+const getLengthofEventUser = async (req, res, next) => {
+    try {
+        const eventCount = await Event.countDocuments();
+
+        const allEvents = await Event.find();
+        const uniqueVenues = [...new Set(allEvents.map(event => event.venue))];
+
+        const venueCount = uniqueVenues.length;
+        const userCount = await User.countDocuments();
+
+        res.json({ userCount, eventCount, venueCount });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+module.exports = { createEvent, getallEvents, getsigleEvents, updateEvents, deleteEvents, createTicket, getTicketforEvent, updateTicket, deleteTicket, getUpcomimgEvent, getFeaturedEvent, getEventForCategories, getLengthofCategories, getSearchEvent, getLengthofEventUser }
