@@ -10,7 +10,6 @@ const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 
 
-
 const getProfile = async (req, res, next) => {
     try {
         const userId = req.user.id;
@@ -274,6 +273,14 @@ const registerforEvent = async (req, res, next) => {
             }
             paymentUrl = paymentResponse.paymentUrl;
             transactionId = paymentResponse.transactionId;
+            const transaction = new Transaction({
+                userId,
+                eventId,
+                amount: totalPrice,
+                status,
+                transactionId
+            });
+            await transaction.save();
         } else {
             status = 'completed';
             ticket.sit -= numberOfSeats;
@@ -293,14 +300,7 @@ const registerforEvent = async (req, res, next) => {
         });
         await registration.save();
 
-        const transaction = new Transaction({
-            userId,
-            eventId,
-            amount: totalPrice,
-            status,
-            transactionId
-        });
-        await transaction.save();
+     
 
         return res.status(200).json({
             message: 'Registration successful',
