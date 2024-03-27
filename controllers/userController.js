@@ -219,8 +219,9 @@ const UserregisterforMyEvent = async (req, res, next) => {
         const userRegistrations = [];
 
         for (const registration of registrations) {
+            console.log(registration);
             const ticket = registration.ticketId;
-            const user = await User.findById(ticket.userId);
+            const user = await User.findById(registration.userId);
             const formattedDate = moment(event.date).format('YYYY-MM-DD');
 
             userRegistrations.push({
