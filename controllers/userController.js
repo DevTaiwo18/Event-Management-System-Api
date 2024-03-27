@@ -199,7 +199,6 @@ const UserregisterforMyEvent = async (req, res, next) => {
     try {
         const eventId = req.params.eventId;
         const userId = req.user.id;
-        console.log(userId);
 
         const event = await Event.findById(eventId);
         if (!event) {
@@ -208,7 +207,6 @@ const UserregisterforMyEvent = async (req, res, next) => {
                 message: 'Event not found'
             });
         }
-        console.log(event.createdBy);
         if (event.createdBy.toString() !== userId) {
             return res.status(403).json({
                 status: 'fail',
@@ -222,7 +220,7 @@ const UserregisterforMyEvent = async (req, res, next) => {
 
         for (const registration of registrations) {
             const ticket = registration.ticketId;
-            const user = await User.findById(registration.userId);
+            const user = await User.findById(ticket.userId);
             const formattedDate = moment(event.date).format('YYYY-MM-DD');
 
             userRegistrations.push({
@@ -234,6 +232,8 @@ const UserregisterforMyEvent = async (req, res, next) => {
                 pricePaid: registration.totalPrice,
             });
         }
+
+        console.log(userRegistrations);
 
         res.status(200).json({ userRegistrations });
     } catch (error) {
